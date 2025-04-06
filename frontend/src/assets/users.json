@@ -1,0 +1,33 @@
+[
+    {
+      "id": "user001",
+      "name": "Aryan Sharma",
+      "role": "admin",
+      "avatar": "https://i.pravatar.cc/100?img=10"
+    },
+    {
+      "id": "user002",
+      "name": "Neha Verma",
+      "role": "member",
+      "avatar": "https://i.pravatar.cc/100?img=20"
+    },
+    {
+      "id": "user003",
+      "name": "Rohit Mehta",
+      "role": "member",
+      "avatar": "https://i.pravatar.cc/100?img=30"
+    },
+    {
+      "id": "user004",
+      "name": "Sanya Kapoor",
+      "role": "member",
+      "avatar": "https://i.pravatar.cc/100?img=40"
+    },
+    {
+      "id": "user005",
+      "name": "Vikas Yadav",
+      "role": "member",
+      "avatar": "https://i.pravatar.cc/100?img=50"
+    }
+  ]
+  
