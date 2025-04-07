@@ -3,7 +3,6 @@ import Task from "../models/task.model.js";
 import User from "../models/user.models.js";
 import mongoose from "mongoose";
 export const add = async(req,res)=>{
-    console.log(req.user._id)
     try {
         const {task} = req.body;
         const userId = req.user._id
@@ -103,8 +102,9 @@ export const deleteTask = async(req,res)=>{
         if (!deletedTask) {
             return res.status(404).json({ message: "Task not found" });
         }
+        const updatedTask = await Task.find({})
 
-        res.status(200).json({ message: "Task deleted successfully", deletedTask });
+        res.status(200).json({ message:updatedTask});
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
@@ -145,7 +145,7 @@ export const displayTask = async (req,res)=>{
         res.status(200).json({message:`no tasks found`})
         
     }
-    res.status(200).json({message:`${tasks}`})
+    res.status(200).json({message:tasks})
 
 
 }
