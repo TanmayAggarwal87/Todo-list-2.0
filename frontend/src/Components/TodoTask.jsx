@@ -6,13 +6,12 @@ import { useTaskStore } from '../store/useTaskStore'
 
 
 function TodoTask() {
-  const [TodoTask,setTodoTask] = useState(["Eat","Code","Sleep"])
   const [newTask,setNewTask]= useState("")
   const [users,setUsers] = useState(members)
   const [addNewTask,setAddNewTask] = useState({
     task:"",
   })
-  const{addTask,displayTask,tasks,deleteTask} = useTaskStore()
+  const{addTask,displayTask,tasks,deleteTask,completeTask,starredTasks} = useTaskStore()
 
 
 // with backend fuvntionality
@@ -26,40 +25,13 @@ function TodoTask() {
     displayTask()
   }
 
-  // with backend
 
 
-  
-    
-
-
-// no backend funvtionality
-  function handleCompletedTask(event) {
-    const listItem = event.target.closest("li") 
-
-    if (event.target.checked) {
-      listItem.classList.add("bg-white", "text-gray-500","border-2", "border-gray-600")
-      listItem.classList.remove("bg-[#422ad5]", "text-white")
-    } else {
-      listItem.classList.remove("bg-white", "text-gray-500","border-2", "border-gray-600")
-      listItem.classList.add("bg-[#422ad5]", "text-white")
-    }
-  }
-
-  const [starredTasks, setStarredTasks] = useState([]); 
-
-  function toggleStar(index) {  
-    setStarredTasks((prevStarredTasks) => {
-      if (prevStarredTasks.includes(index)) {
-        return prevStarredTasks.filter(i => i !== index);
-      } else {
-        return [...prevStarredTasks, index];
-      }
-    });
-  }
  
-  useEffect(()=>{ displayTask()  },[])
-  console.log(tasks)
+ 
+  useEffect(()=>{ displayTask() },[displayTask])
+ 
+
   return (
     <div className=''>
       <form onSubmit = {handleSubmit}>
@@ -72,28 +44,37 @@ function TodoTask() {
       
       <div className='m-4'>
       <ul className="list bg-base-100 rounded-box shadow-md">
-        {!tasks?(
-          <p>Nothing to do?</p>
-        )
-        :
+        {
         
           tasks.map((task,index)=>(
-            <li key={index} id={`list-${task._id}`} className={`list-row list transition duration-500 
-              ${starredTasks.includes(task._id) 
+            <li key={task._id} id={`list-${task._id}`} className={`list-row list transition duration-500 
+              
+              ${task.isCompleted
+                ? "bg-white text-gray-500 border-2 border-gray-600"
+                : "bg-[#422ad5] text-white " 
+                
+              } 
+              ${task.isStarred 
                 ? "bg-gradient-to-r from-[#422ad5] to-yellow-500" 
                 : "bg-[#422ad5] text-white"
-              } mb-2 text-white`}>
-              <input type="checkbox"  className="checkbox border-white bg-transparent checked:bg-white checked:text-black checked:border-black" onClick={handleCompletedTask}/>
+              } 
+              ${
+                task.isStarred && task.isCompleted ?"bg-gradient-to-r from-[#ffffff] to-yellow-500 text-black" :" bg-[#422ad5] text-white " 
+              } mb-2`}>
+              <input type="checkbox"  className="checkbox border-white bg-transparent checked:bg-white
+               checked:text-black checked:border-black" 
+               checked={task.isCompleted}
+               onChange={()=>completeTask(task._id)}/>
               {task.task}
               <div className="dropdown cursor-pointer ">
                 <div tabIndex={0} role="button" className=" cursor-pointer m-1"><Ellipsis/></div>
-                <ul tabIndex={0} className="dropdown-content menu bg-base-100 border-2 border-black rounded-box z-1 w-52 p-2 text-black shadow-sm">
-                  <li><button onClick={() => toggleStar(task._id)} className='flex justify-between items-center'><div>Star</div>
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 border-2 border-black rounded-box z-1 w-52 p-2 text-black shadow-sm relative right-5 md:left-0">
+                  <li><button onClick={() => starredTasks(task._id)} className='flex justify-between items-center'><div>Star</div>
                   <div>
                       <Star className="transition-all duration-300"
                       size={24}
-                      stroke={starredTasks.includes(task._id) ? "yellow" : "gray"}
-                      fill={starredTasks.includes(task._id) ? "yellow" : "none"}/>
+                      stroke={task.isStarred ? "yellow" : "gray"}
+                      fill={task.isStarred? "yellow" : "none"}/>
                   </div> </button></li>
                   <li>
                     
@@ -110,7 +91,7 @@ function TodoTask() {
                     </div>
                     
                   </li>
-                  <li><button className='btn btn-error' onClick={()=>{deleteTask(task._id); displayTask()}}>Delete Task</button></li>
+                  <li><button className='btn btn-error' onClick={()=>deleteTask(task._id)}>Delete Task</button></li>
                 </ul>
               </div>
               

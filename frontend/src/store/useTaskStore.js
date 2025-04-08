@@ -34,6 +34,7 @@ export const useTaskStore = create((set)=>({
 
         } catch (error) {
             toast.error(error)
+            set({loading:false})
             
         }
 
@@ -43,9 +44,46 @@ export const useTaskStore = create((set)=>({
         try {
             const res = await axiosInstance.delete(`/task/${id}/delete`)
             
-            set({tasks:res.data.message})
+            set((state) => ({
+                tasks: state.tasks.filter(task => task._id !== id),
+              }));
+              
         }
          catch (error) {
+            toast.error("Error in deleting Task")
+
+            
+        }
+    },
+    completeTask: async(id)=>{
+        try {
+            const res = await axiosInstance.post(`/task/${id}/toggleComplete`);
+
+        set((state) => ({
+        tasks: state.tasks.map((task) =>
+            task._id === id ? { ...task, isCompleted: !task.isCompleted } : task
+        ),
+        }));
+            
+        } catch (error) {
+            
+        }
+
+
+    },
+    starredTasks:async(id)=>{
+        try {
+            const res = await axiosInstance.post(`/task/${id}/toggleStarred`)
+
+            set((state)=>({
+                tasks:state.tasks.map((task)=>
+
+                    task._id === id ?{ ...task, isStarred:!task.isStarred}:task
+
+                )
+
+            }))
+        } catch (error) {
             
         }
     }

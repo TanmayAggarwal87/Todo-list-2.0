@@ -59,7 +59,7 @@ export const toggleComplete = async(req,res)=>{
             await task.save()
         }
 
-        res.json(task)
+        res.json({message:task})
     } catch (error) {
         console.log(error)
     }
@@ -97,16 +97,16 @@ export const toggleStarred = async(req,res)=>{
 export const deleteTask = async(req,res)=>{
     try {
         const { taskId } = req.params;
+        const userId = req.user._id;
         const deletedTask = await Task.findByIdAndDelete(taskId);
 
         if (!deletedTask) {
             return res.status(404).json({ message: "Task not found" });
         }
-        const updatedTask = await Task.find({})
-
+        const updatedTask = await Task.find({createdBy:userId})
         res.status(200).json({ message:updatedTask});
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
+        res.status(500).json({ message: "Internal Server Error yoyo", error: error.message });
     }
 
 }
@@ -137,15 +137,17 @@ export const assignTask=async(req,res)=>{
 
 }
 export const displayTask = async (req,res)=>{
-    const userId = req.user._id;
-    const tasks = await Task.find({createdBy:userId})
-    
-
-    if(!tasks.length){
-        res.status(200).json({message:`no tasks found`})
+    try {
+        const userId = req.user._id;
+        const tasks = await Task.find({createdBy:userId})
+        if(!tasks.length){
+            res.status(200).json({message:tasks})
+        }
+        res.status(200).json({message:tasks})
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
         
     }
-    res.status(200).json({message:tasks})
 
 
 }

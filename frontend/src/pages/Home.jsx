@@ -4,8 +4,8 @@ import Members from '../Components/Members'
 
 function Home() {
   return (
-    <div className='flex justify-between items-start flex-row mt-4'>
-      <div className='flex justify-start items-start flex-col max-w-full'>
+    <div className='flex md:justify-between  items-start md:flex-row flex-col mt-4'>
+      <div className='flex justify-start items-start flex-col max-w-full '>
         <TodoTask/>
       </div>
       <div>
