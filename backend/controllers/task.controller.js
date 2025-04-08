@@ -2,6 +2,7 @@
 import Task from "../models/task.model.js";
 import User from "../models/user.models.js";
 import mongoose from "mongoose";
+
 export const add = async(req,res)=>{
     try {
         const {task} = req.body;
@@ -21,14 +22,7 @@ export const add = async(req,res)=>{
     
         if(newTask){
             await newTask.save()
-            res.status(200).json({
-                task: newTask.task,
-                createdBy: newTask.createdBy,
-                isCompleted: newTask.isCompleted,
-                isStarred:newTask.isStarred,
-    
-    
-            })
+            res.status(200).json({ message:newTask})
     
         }
     } catch (error) {
@@ -145,7 +139,7 @@ export const displayTask = async (req,res)=>{
         }
         res.status(200).json({message:tasks})
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
+        
         
     }
 

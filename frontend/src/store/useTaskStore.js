@@ -13,8 +13,11 @@ export const useTaskStore = create((set)=>({
 
         try {
             const res = await axiosInstance.post("/task/add",data);
-            set({userTask:res.data});
-            toast.success("Task added succesfully")
+            
+
+            set((state) => ({
+            tasks: [...state.tasks, res.data.message],
+            }));
             
         } catch (error) {
             toast.error(error.response.data.message)

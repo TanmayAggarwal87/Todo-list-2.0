@@ -15,21 +15,21 @@ function TodoTask() {
 
 
 // with backend fuvntionality
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!addNewTask.task.trim()) return; 
 
     addTask(addNewTask);
     setAddNewTask({ task: "" });
-    displayTask()
+    await displayTask()
   }
 
 
 
  
  
-  useEffect(()=>{ displayTask() },[displayTask])
+  useEffect(()=>{ displayTask() },[])
  
 
   return (
