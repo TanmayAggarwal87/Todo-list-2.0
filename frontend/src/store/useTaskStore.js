@@ -27,21 +27,17 @@ export const useTaskStore = create((set)=>({
 
     },
 
-    displayTask: async()=>{
-        set({loading:true})
+    displayTask: async () => {
+        set({ loading: true });
         try {
-            
             const res = await axiosInstance.get("/task/displayTask");
             set({ tasks: res.data.message, loading: false });
-            
-
         } catch (error) {
-            toast.error(error)
-            set({loading:false})
-            
+            toast.error("Could not load tasks");
+            set({ loading: false });
         }
-
     },
+    
 
     deleteTask: async(id)=>{
         try {

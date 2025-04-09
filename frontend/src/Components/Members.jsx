@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import userJson from "../assets/users.json"
 import { X } from 'lucide-react'
+import { useMembersStore } from '../store/useMembersStore'
 ///
 ///
 /// ABHI ADD USERS , REMOVE USERS WALA FEATURE PENDING H 
@@ -9,29 +10,53 @@ import { X } from 'lucide-react'
 ///
 
 
+
 function Members() {
-  const [member,setMember] = useState(userJson)
+   const [addNewMember,setAddNewMember] = useState({
+      addMemberId:"",
+    })
+  const {members,addMember,getMembers,removeMembers} = useMembersStore();
+
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    if (!addNewMember.addMemberId.trim()) return; 
+
+    addMember(addNewMember);
+    setAddNewMember({ addMemberId: "" });
+ 
+  }
+
+  useEffect(() => {
+    getMembers();
+  }, []);
+
   return (
     <div>
-      <div className="flex justify-center items-center flex-row w-[500px] mt-4">
-        <input className='input m-3 max-w-full'></input>
-        <button className='btn btn-warning'>Add Member</button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="flex justify-center items-center flex-row w-[500px] mt-4">
+          <input className='input m-3 max-w-full' value={addNewMember.addMemberId} 
+            onChange={(e)=>setAddNewMember({...addNewMember,addMemberId:e.target.value})}></input>
+          <button className='btn btn-warning' type='submit'>Add Member</button>
+        </div>
+      </form>
+      
 
       <div>
         <ul className='list bg-base-100 rounded-box shadow-2xl mr-3 w-full '>
-          {member.map((members,index)=>(
-              <li className="list-row mt-0 w-full" key={members.id} >
+          {members.map((member)=>(
+              <li className="list-row mt-0 w-full" key={member._id} >
                 <div className='flex justify-between items-center flex-row w-[480px]'>
                   <div className='flex justify-center items-center flex-row'>
-                    <div className='mr-3'><img className="size-10 rounded-box" src={members.avatar}/></div>
+                    <div className='mr-3'><img className="size-10 rounded-box" src={member.user.profilePic} /></div>
                     <div>
-                      <div>{members.name}</div>
-                      <div className="text-xs uppercase font-semibold opacity-60">{members.role}</div>
+                      <div>{member.user.name}</div>
+                      <div className="text-xs uppercase font-semibold opacity-60">{member.role}</div>
                     </div>
                   </div>
                     <div>
-                      <button className='cursor-pointer'><X/></button>
+                      <button className='cursor-pointer' onClick={()=>removeMembers(member.user._id)}><X/></button>
                       
                     </div>
                   

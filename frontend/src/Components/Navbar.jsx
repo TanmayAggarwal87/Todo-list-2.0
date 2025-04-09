@@ -13,7 +13,8 @@ function Navbar() {
     <div className=' flex justify-between text-center flex-row w-screen'>
         <div className='logo  flex justify-centre items-center text-center font-bold '>
           <div className='bg-primary/10 p-2 rounded-xl mr-2'>
-          <NotepadText className='text-primary' /> 
+          <Link to="/"><NotepadText className='text-primary' /> </Link>
+          
           </div>
         ToDo<span className='text-primary/100 '>Share</span>
 

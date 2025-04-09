@@ -6,8 +6,7 @@ import { useTaskStore } from '../store/useTaskStore'
 
 
 function TodoTask() {
-  const [newTask,setNewTask]= useState("")
-  const [users,setUsers] = useState(members)
+
   const [addNewTask,setAddNewTask] = useState({
     task:"",
   })
@@ -50,16 +49,16 @@ function TodoTask() {
             <li key={task._id} id={`list-${task._id}`} className={`list-row list transition duration-500 
               
               ${task.isCompleted
-                ? "bg-white text-gray-500 border-2 border-gray-600"
-                : "bg-[#422ad5] text-white " 
+                ? "bg-white border-2 border-gray-600 text-black"
+                : "bg-primary/100 text-white " 
                 
               } 
               ${task.isStarred 
-                ? "bg-gradient-to-r from-[#422ad5] to-yellow-500" 
-                : "bg-[#422ad5] text-white"
+                ? "bg-gradient-to-r bg-primary/100 to-yellow-500" 
+                : "bg-primary/100"
               } 
               ${
-                task.isStarred && task.isCompleted ?"bg-gradient-to-r from-[#ffffff] to-yellow-500 text-black" :" bg-[#422ad5] text-white " 
+                task.isStarred && task.isCompleted ?"bg-gradient-to-r from-[#ffffff] to-yellow-500 text-black" :" bg-primary/100" 
               } mb-2`}>
               <input type="checkbox"  className="checkbox border-white bg-transparent checked:bg-white
                checked:text-black checked:border-black" 

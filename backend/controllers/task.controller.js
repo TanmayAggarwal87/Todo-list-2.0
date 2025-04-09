@@ -1,6 +1,7 @@
 
 import Task from "../models/task.model.js";
 import User from "../models/user.models.js";
+import Team from "../models/team.model.js";
 import mongoose from "mongoose";
 
 export const add = async(req,res)=>{
@@ -12,12 +13,17 @@ export const add = async(req,res)=>{
             res.status(400).json({message:"task and user required"})
     
         }
+
+        const team = await Team.findOne({ "members.user": userId });
+
+        
     
         const newTask = new Task({
             task:task,
             createdBy:userId,
             isStarred:false,
-            isCompleted:false
+            isCompleted:false,
+            team:team ? team._id:null
         })
     
         if(newTask){
@@ -130,18 +136,23 @@ export const assignTask=async(req,res)=>{
    }
 
 }
-export const displayTask = async (req,res)=>{
+export const displayTask = async (req, res) => {
     try {
         const userId = req.user._id;
-        const tasks = await Task.find({createdBy:userId})
-        if(!tasks.length){
-            res.status(200).json({message:tasks})
+
+        const team = await Team.findOne({ "members.user": userId });
+
+        let tasks;
+        if (team) {
+            tasks = await Task.find({ team: team._id }).sort({ createdAt: -1 });
+        } else {
+            tasks = await Task.find({ createdBy: userId, team: null }).sort({ createdAt: -1 });
         }
-        res.status(200).json({message:tasks})
+
+        res.status(200).json({ message: tasks });
+
     } catch (error) {
-        
-        
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch tasks" });
     }
-
-
 }

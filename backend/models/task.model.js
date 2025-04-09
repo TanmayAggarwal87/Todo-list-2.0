@@ -20,7 +20,13 @@ const taskSchema =mongoose.Schema({
     },
     isStarred: { 
         type: Boolean, 
-        default: false },
+        default: false 
+    },
+    team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team",
+        default:null
+    }       
 })
 
 const Task = mongoose.model("Task",taskSchema)
