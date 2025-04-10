@@ -8,6 +8,7 @@ const taskSchema =mongoose.Schema({
     assignedTo:{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: "User",
+        default:null
     },
     createdBy: { 
         type: mongoose.Schema.Types.ObjectId,

@@ -85,5 +85,23 @@ export const useTaskStore = create((set)=>({
         } catch (error) {
             
         }
-    }
+    },
+    assignTask: async(taskId,userId,name)=>{
+
+        try {
+            const res= await axiosInstance.post(`/task/${taskId}/assignTask`, {assignToUserId:userId});
+            toast.success(`Task Assigned To ${name}`)
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    unassignTask: async(taskId)=>{
+
+        try {
+            const res= await axiosInstance.post(`/task/${taskId}/unassignTask`);
+            toast.success(`Task unassigned Successfully`)
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }))

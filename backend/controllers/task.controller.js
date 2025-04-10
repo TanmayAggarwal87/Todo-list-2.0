@@ -119,8 +119,13 @@ export const assignTask=async(req,res)=>{
      const checkUser = await User.findById(assignToUserId)
      
      if(!checkUser){
-         res.status(400).json({message:"User doesnot exist in group"})
+        return res.status(400).json({message:"User doesnot exist"})
      }
+     const team = await Team.findOne({ "members.user": assignToUserId });
+        if (!team) {
+        return res.status(400).json({ message: "Assigned user is not part of your team" });
+        }
+
  
      const updatedTask = await Task.findByIdAndUpdate(taskId,
          { assignedTo: assignToUserId },
@@ -129,13 +134,47 @@ export const assignTask=async(req,res)=>{
      if (!updatedTask) {
          return res.status(404).json({ message: "Task not found" });
      }
- 
-     res.status(200).json(updatedTask);
+     await updatedTask.populate("assignedTo", "name")
+     res.status(200).json({task:updatedTask});
    } catch (error) {
-        consol.log(error)
+        console.log(error)
+        res.status(500).json({ message: "Something went wrong", error: error.message })
    }
 
 }
+
+export const unassignTask = async (req, res) => {
+    try {
+      const { taskId } = req.params;
+      const currentUserId = req.user._id;
+  
+      const team = await Team.findOne({ "members.user": currentUserId });
+      if (!team) {
+        return res.status(403).json({ message: "You are not part of a team" });
+      }
+  
+      const isAdmin = team.members.find(
+        (m) => m.user.toString() === currentUserId.toString() && m.role === "Admin"
+      );
+      if (!isAdmin) {
+        return res.status(403).json({ message: "Only admin can unassign tasks" });
+      }
+  
+      const task = await Task.findById(taskId);
+      if (!task) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+  
+      task.assignedTo = null;
+      await task.save();
+  
+      res.status(200).json({ message: "Task unassigned successfully", task });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+  
 export const displayTask = async (req, res) => {
     try {
         const userId = req.user._id;
