@@ -1,11 +1,11 @@
 import express from "express"
-const app = express()
 import authRoutes from "./Routes/auth.routes.js"
 import taskRoutes from "./Routes/task.routes.js"
 import memberRoutes from "./Routes/members.routes.js"
 import {mongo} from "./lib/db.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import { app,server } from "./lib/socket.js"
 
 app.use(cookieParser())
 app.use(express.json())
@@ -22,7 +22,7 @@ app.use("/api/task",taskRoutes);
 app.use("/api/member",memberRoutes);
 
 
-app.listen(3000,()=>{
+server.listen(3000,()=>{
     console.log("listening on port 3000"),
     mongo();
 

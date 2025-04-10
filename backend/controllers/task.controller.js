@@ -3,6 +3,7 @@ import Task from "../models/task.model.js";
 import User from "../models/user.models.js";
 import Team from "../models/team.model.js";
 import mongoose from "mongoose";
+import { emitTaskUpdate } from "../lib/socket.js";
 
 export const add = async(req,res)=>{
     try {
@@ -31,6 +32,7 @@ export const add = async(req,res)=>{
             res.status(200).json({ message:newTask})
     
         }
+        emitTaskUpdate()
     } catch (error) {
         res.status(500).json({ error: "Internal server error", details: error.message });
         
@@ -52,14 +54,17 @@ export const toggleComplete = async(req,res)=>{
         if(!task.isCompleted){
             task.isCompleted = true;
             await task.save()
+            emitTaskUpdate()
 
         }
         else{
             task.isCompleted = false;
             await task.save()
+            emitTaskUpdate()
         }
 
         res.json({message:task})
+        
     } catch (error) {
         console.log(error)
     }
@@ -80,11 +85,13 @@ export const toggleStarred = async(req,res)=>{
         if(!task.isStarred){
             task.isStarred = true;
             await task.save()
+            emitTaskUpdate()
 
         }
         else{
             task.isStarred = false;
             await task.save()
+            emitTaskUpdate()
         }
 
         res.json(task)
@@ -105,6 +112,7 @@ export const deleteTask = async(req,res)=>{
         }
         const updatedTask = await Task.find({createdBy:userId})
         res.status(200).json({ message:updatedTask});
+        emitTaskUpdate()
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error yoyo", error: error.message });
     }
@@ -136,6 +144,7 @@ export const assignTask=async(req,res)=>{
      }
      await updatedTask.populate("assignedTo", "name")
      res.status(200).json({task:updatedTask});
+     emitTaskUpdate()
    } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Something went wrong", error: error.message })
@@ -169,6 +178,7 @@ export const unassignTask = async (req, res) => {
       await task.save();
   
       res.status(200).json({ message: "Task unassigned successfully", task });
+      emitTaskUpdate()
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Server error" });
@@ -189,7 +199,6 @@ export const displayTask = async (req, res) => {
         }
 
         res.status(200).json({ message: tasks });
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to fetch tasks" });
