@@ -2,20 +2,16 @@ import React, { useState,useEffect } from 'react'
 import userJson from "../assets/users.json"
 import { X } from 'lucide-react'
 import { useMembersStore } from '../store/useMembersStore'
-///
-///
-/// ABHI ADD USERS , REMOVE USERS WALA FEATURE PENDING H 
-///
-///
-///
-
-
+import {socket} from "../lib/socket.js"
 
 function Members() {
    const [addNewMember,setAddNewMember] = useState({
       addMemberId:"",
     })
-  const {members,addMember,getMembers,removeMembers} = useMembersStore();
+    const members = useMembersStore((state) => state.members);
+  const addMember = useMembersStore((state) => state.addMember);
+  const removeMembers = useMembersStore((state) => state.removeMembers);
+  const getMembers = useMembersStore((state) => state.getMembers);
 
 
   const handleSubmit = async(e) => {
@@ -25,12 +21,29 @@ function Members() {
 
     addMember(addNewMember);
     setAddNewMember({ addMemberId: "" });
+    socket.emit("membersUpdated")
  
   }
 
+
   useEffect(() => {
     getMembers();
-  }, []);
+  
+    if (!socket) return;
+  
+    const handler = () => {
+      console.log("members updated",members);
+      getMembers();
+    };
+  
+    socket.on("refreshMembers", handler);
+  
+    return () => {
+      socket.off("refreshMembers", handler);
+    };
+  }, [socket, getMembers]);
+  
+
 
   return (
     <div>

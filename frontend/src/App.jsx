@@ -12,12 +12,14 @@ import ProfilePage from './pages/ProfilePage'
 import PageNotFound from './pages/PageNotFound'
 import { Loader, Loader2 } from 'lucide-react'
 import { Toaster } from 'react-hot-toast'
+import { useThemeStore } from './store/useThemeStore'
 
 
 
 function App() {
 
   const {checkAuth, authUser,isCheckingAuth} = useAuthStore();
+  const {theme} = useThemeStore()
 
   useEffect(()=>{
     checkAuth()
@@ -35,7 +37,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div data-theme={theme} className='min-h-screen max-h-full'>
       <Navbar/>
 
       <Routes>

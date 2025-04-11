@@ -2,6 +2,7 @@ import { Eye, EyeOff, Loader2, Lock, Mail, NotepadText } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
+import TodoAuthPattern from '../Components/TodoAuthPattern';
 
 function LoginPage() {
   const [showPassword,setShowPassword] = useState(false);
@@ -105,8 +106,8 @@ function LoginPage() {
         </div>
 
       </div>
-      <div className='bg-pink-300 h-screen w-full hidden lg:flex'>
-        right
+      <div className=' h-screen w-full hidden lg:flex'>
+        <TodoAuthPattern/>  
 
       </div>
     </div>

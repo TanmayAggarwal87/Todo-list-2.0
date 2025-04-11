@@ -10,7 +10,7 @@ function Navbar() {
 
   const {authUser,logout}= useAuthStore()
   return (
-    <div className=' flex justify-between text-center flex-row max-w-screen py-2 mx-2'>
+    <div className='  flex justify-between text-center flex-row max-w-screen py-2 mx-2 bg-base-100/80'>
         <div className='logo  flex justify-centre items-center text-center font-bold '>
           <div className='bg-primary/10 p-2 rounded-xl mr-2'>
           <Link to="/"><NotepadText className='text-primary' /> </Link>
@@ -28,13 +28,16 @@ function Navbar() {
               </div>
             </button>
           </Link>
-          <Link to="/profile">
+          {authUser 
+          ?<Link to="/profile">
           <button className='cursor-pointer'>
               <div className='flex justify-centre text-centre mr-3 '><User  size={20}   /> 
                 <span className='hidden md:flex'>Profile</span>
               </div>
-            </button>
+          </button>
           </Link>
+          :<p></p>}
+          
 
            {authUser
            ?<button className='cursor-pointer' onClick={logout}><div className='flex justify-centre text-centre'><LogOut size={20} className=''/><span className='hidden md:flex'>Logout</span></div></button>

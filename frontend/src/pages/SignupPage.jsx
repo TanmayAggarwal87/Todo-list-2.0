@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import toast from "react-hot-toast"
+import TodoAuthPattern from '../Components/TodoAuthPattern';
 
 
 function SignupPage() {
@@ -121,9 +122,9 @@ function SignupPage() {
               </button>
             <div className="text-center mt-5">
               <p className="text-base-content/60">
-                Don&apos;t have an account?{" "}
-                <Link to="/signup" className="link link-primary">
-                  Create account
+                Already have an account?{" "}
+                <Link to="/login" className="link link-primary">
+                  Login
                 </Link>
               </p>
             </div>
@@ -135,8 +136,8 @@ function SignupPage() {
         </div>
 
       </div>
-      <div className='bg-pink-300 h-screen w-full hidden lg:flex'>
-        right
+      <div className=' h-screen w-full hidden lg:flex'>
+        <TodoAuthPattern/>  
 
       </div>
     </div>

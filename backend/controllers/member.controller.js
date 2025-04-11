@@ -1,3 +1,4 @@
+import { emitMemberUpdate } from "../lib/socket.js";
 import Team from "../models/team.model.js"
 import User from "../models/user.models.js";
 
@@ -10,6 +11,7 @@ export const addMember = async (req, res) => {
         if (userId == addMemberId) {
           return res.status(400).json({ message: "Cannot add yourself" });
         }
+        
     
         const memberToAdd = await User.findById(addMemberId);
         if (!memberToAdd) {
@@ -49,7 +51,10 @@ export const addMember = async (req, res) => {
         await team.save();
 
         await team.populate("members.user", "name email profilePic");
+        const allMemberIds = team.members.map((m) => m.user._id.toString());
+        emitMemberUpdate(allMemberIds); 
         res.status(200).json({ message: team});
+        
       } catch (err) {
         console.error("Error in addMember:", err);
         res.status(500).json({ message: "Internal server error", error: err.message });
@@ -92,7 +97,12 @@ export const removeMember= async(req,res)=>{
       
           await team.save();
           await team.populate("members.user", "name email profilePic");
+          
+          const allMemberIds = team.members.map((m) => m.user._id.toString());
+          emitMemberUpdate(allMemberIds);
+
           res.status(200).json({ message: "Member removed successfully", team });
+          
     } catch (error) {
         res.status(400).json({ message: error});
     }
@@ -106,9 +116,9 @@ export const listMembers = async (req, res) => {
         "members.user",
         "name email profilePic"
       );
-  
-  
-      res.status(200).json({ members: team.members });
+    
+      const updatedTeam = await Team.findById(team._id).populate("members.user");
+      res.status(200).json({ members: updatedTeam.members });
     } catch (error) {
       
     }

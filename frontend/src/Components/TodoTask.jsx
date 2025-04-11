@@ -12,6 +12,13 @@ function TodoTask() {
   const { addTask, displayTask, tasks, deleteTask, completeTask, starredTasks, assignTask, unassignTask } = useTaskStore();
   const { members } = useMembersStore();
 
+  useEffect(() => {
+    if (socket && authUser?._id) {
+      socket.emit("registerUser", authUser._id);
+      console.log("Registered user:", authUser._id);
+    }
+  }, [socket, authUser?._id]);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!addNewTask.task.trim()) return;
@@ -100,7 +107,7 @@ function TodoTask() {
                   {task.task}
                   <div className="dropdown cursor-pointer">
                     <div tabIndex={0} role="button" className="cursor-pointer m-1"><Ellipsis /></div>
-                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 border-2 border-black rounded-box z-1 w-52 p-2 text-black shadow-sm relative right-5 md:left-0">
+                    <ul tabIndex={0} className="dropdown-content menu bg-base-300 text-base-content/100 border-2 border-black rounded-box z-1 w-52 p-2 shadow-sm relative right-5 md:left-0">
                       <li>
                         <button onClick={() => {
                           starredTasks(task._id);
