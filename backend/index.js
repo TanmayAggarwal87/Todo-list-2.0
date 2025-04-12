@@ -9,6 +9,7 @@ import path from "path"
 import cors from "cors"
 import { app,server } from "./lib/socket.js"
 dotenv.config()
+const __dirname = path.resolve();
 app.use(cookieParser())
 app.use(express.json())
 app.use(
