@@ -134,6 +134,3 @@ Feel free to open issues or pull requests! Feedback and contributions are always
 
 ---
 
-## 📃 License
-
-[MIT](LICENSE)
