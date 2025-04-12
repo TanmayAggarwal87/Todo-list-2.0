@@ -137,7 +137,10 @@ function SignupPage() {
 
       </div>
       <div className=' h-screen w-full hidden lg:flex'>
-        <TodoAuthPattern/>  
+        <TodoAuthPattern
+        title={"Join our community"}
+        subtitle={"Create an account to start organizing your life, one task at a time."}
+        />  
 
       </div>
     </div>

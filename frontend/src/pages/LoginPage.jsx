@@ -107,7 +107,10 @@ function LoginPage() {
 
       </div>
       <div className=' h-screen w-full hidden lg:flex'>
-        <TodoAuthPattern/>  
+        <TodoAuthPattern
+        title={"Welcome back!"}
+        subtitle={"Sign in to manage your tasks and keep your workflow organized."}
+        />  
 
       </div>
     </div>

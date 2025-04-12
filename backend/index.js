@@ -1,3 +1,4 @@
+import dotenv from "dotenv"
 import express from "express"
 import authRoutes from "./Routes/auth.routes.js"
 import taskRoutes from "./Routes/task.routes.js"
@@ -6,11 +7,13 @@ import {mongo} from "./lib/db.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { app,server } from "./lib/socket.js"
-
+dotenv.config()
 app.use(cookieParser())
 app.use(express.json())
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:process.env.NODE_ENV === "production"
+    ? process.env.FRONTEND_URL
+    : "http://localhost:5173",
     credentials:true}
 ))
 

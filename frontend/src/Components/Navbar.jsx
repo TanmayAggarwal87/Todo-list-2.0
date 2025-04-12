@@ -28,20 +28,35 @@ function Navbar() {
               </div>
             </button>
           </Link>
-          {authUser 
-          ?<Link to="/profile">
-          <button className='cursor-pointer'>
-              <div className='flex justify-centre text-centre mr-3 '><User  size={20}   /> 
-                <span className='hidden md:flex'>Profile</span>
-              </div>
-          </button>
-          </Link>
-          :<p></p>}
+          {authUser
+          ?
+          <div className="dropdown dropdown-end">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                src={authUser.profilePic} />
+            </div>
+          </div>
           
-
-           {authUser
-           ?<button className='cursor-pointer' onClick={logout}><div className='flex justify-centre text-centre'><LogOut size={20} className=''/><span className='hidden md:flex'>Logout</span></div></button>
-           :<div></div>} 
+            <ul tabIndex={0} className="dropdown-content menu text-lg text-base-content mt-5 rounded-box z-1 w-52 p-2 shadow-sm bg-neutral">
+              <li>
+              <Link to="/profile">
+                <button className='cursor-pointer'>
+                    <div className='flex justify-centre items-center text-centre mr-3 '><User  size={20}   /> 
+                      <span className='hidden md:flex ml-2'>Profile</span>
+                    </div>
+                </button>
+              </Link></li>
+              <li>
+              <button className='cursor-pointer' onClick={logout}><div className='flex justify-centre items-center text-centre'><LogOut size={20} className=''/><span className='hidden md:flex ml-2'>Logout</span></div></button>
+              </li>
+            </ul>
+          </div>
+          :<div></div>}
+          
+         
+          
           
         </div>
     </div>

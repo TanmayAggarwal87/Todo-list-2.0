@@ -17,9 +17,9 @@ const TodoAuthPattern = ({ title, subtitle }) => {
   ];
 
   return (
-    <div className="hidden lg:flex w-full h-screen items-center justify-center bg-base-200 p-12">
+    <div className="hidden lg:flex w-full h-screen items-center justify-center bg-base-200 p-10">
       <div className="w-full max-w-4xl text-center">
-        <div className="relative h-[500px] w-full mb-8 overflow-hidden rounded-2xl bg-primary/10">
+        <div className="relative h-[500px] w-full mb-5 overflow-hidden rounded-2xl bg-primary/10 mt-5">
           {todoItems.map((item, i) => (
             <div
               key={i}
@@ -38,12 +38,12 @@ const TodoAuthPattern = ({ title, subtitle }) => {
             >
               <input
                 type="checkbox"
-                className="checkbox checkbox-md mr-3"
+                className="checkbox checkbox-md border-gray-600 mr-3"
                 checked={item.checked}
                 readOnly
               />
               <span
-                className={`text-sm ${
+                className={`text-[15px] ${
                   item.checked ? "line-through text-base-content/60" : "text-base-content/100"
                 }`}
               >
@@ -54,7 +54,7 @@ const TodoAuthPattern = ({ title, subtitle }) => {
         </div>
 
         <h2 className="text-2xl font-bold mb-2">{title}</h2>
-        <p className="text-base-content/60">{subtitle}</p>
+        <p className="text-base-content/60 ">{subtitle}</p>
       </div>
     </div>
   );
