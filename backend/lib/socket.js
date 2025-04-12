@@ -13,6 +13,7 @@ const io = new Server(server, {
     ? [process.env.FRONTEND_URL]
     : ["http://localhost:5173"], // Add vercel URL too if needed
   },
+  credentials: true, 
 });
 
 const userSocketMap = new Map(); // userId -> socket.id
