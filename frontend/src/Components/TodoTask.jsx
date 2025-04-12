@@ -67,11 +67,11 @@ function TodoTask() {
   }, []);
 
   return (
-    <div>
+    <div className='w-full md:max-w-[500px]'>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-center items-center flex-row w-[500px] mt-4">
+        <div className="flex justify-center items-center flex-row max-w-screen md:max-w-full mt-4">
           <input
-            className='input m-3 max-w-full'
+            className='input m-3 w-full'
             value={addNewTask.task}
             onChange={(e) => setAddNewTask({ ...addNewTask, task: e.target.value })}
           />
