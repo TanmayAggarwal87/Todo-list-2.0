@@ -5,6 +5,7 @@ import taskRoutes from "./Routes/task.routes.js"
 import memberRoutes from "./Routes/members.routes.js"
 import {mongo} from "./lib/db.js"
 import cookieParser from "cookie-parser"
+import path from "path"
 import cors from "cors"
 import { app,server } from "./lib/socket.js"
 dotenv.config()
