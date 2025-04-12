@@ -44,12 +44,12 @@ function Navbar() {
               <Link to="/profile">
                 <button className='cursor-pointer'>
                     <div className='flex justify-centre items-center text-centre mr-3 '><User  size={20}   /> 
-                      <span className='hidden md:flex ml-2'>Profile</span>
+                      <span className=' ml-2'>Profile</span>
                     </div>
                 </button>
               </Link></li>
               <li>
-              <button className='cursor-pointer' onClick={logout}><div className='flex justify-centre items-center text-centre'><LogOut size={20} className=''/><span className='hidden md:flex ml-2'>Logout</span></div></button>
+              <button className='cursor-pointer' onClick={logout}><div className='flex justify-centre items-center text-centre'><LogOut size={20} className=''/><span className='ml-2'>Logout</span></div></button>
               </li>
             </ul>
           </div>
