@@ -11,9 +11,11 @@ const io = new Server(server, {
   cors: {
     origin:process.env.NODE_ENV === "production"
     ? [process.env.FRONTEND_URL]
-    : ["http://localhost:5173"], // Add vercel URL too if needed
+    : ["http://localhost:5173"],
+     // Add vercel URL too if needed
+     credentials: true, 
   },
-  credentials: true, 
+ 
 });
 
 const userSocketMap = new Map(); // userId -> socket.id
