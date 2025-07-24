@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser"
 import path from "path"
 import cors from "cors"
 import { app,server } from "./lib/socket.js"
+import job from "./lib/cron.js"
 dotenv.config()
 const __dirname = path.resolve();
 app.use(cookieParser())
@@ -18,6 +19,7 @@ app.use(
       credentials: true,
     })
   );
+  job.start()
 
 
 
