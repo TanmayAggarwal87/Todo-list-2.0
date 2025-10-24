@@ -1,22 +1,22 @@
-# 📝 Collaborative To-Do List App
+# TodoShare
 
 A real-time collaborative to-do list app that allows users to manage tasks efficiently in teams. Built with a powerful MERN stack backend and a clean, interactive UI using React, Tailwind CSS, and DaisyUI. Supports real-time updates using Socket.IO.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 👥 Two user types: Admin and Member
-- ✅ Task creation, completion toggle, starring
-- 📌 Assign and unassign tasks (Admin only)
-- 🔒 Role-based control over task actions
-- 🔄 Real-time sync of tasks and members via WebSockets
-- 📦 Responsive UI using Tailwind CSS and DaisyUI
-- 📱 Mobile-friendly layout
+-  Two user types: Admin and Member
+-  Task creation, completion toggle, starring
+-  Assign and unassign tasks (Admin only)
+-  Role-based control over task actions
+-  Real-time sync of tasks and members via WebSockets
+-  Responsive UI using Tailwind CSS and DaisyUI
+-  Mobile-friendly layout
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### **Frontend**
 - React 19
@@ -39,7 +39,7 @@ A real-time collaborative to-do list app that allows users to manage tasks effic
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
 - Initially deployed on **Vercel**.  
   ⚠️ *However, Vercel does not support WebSocket (Socket.IO) servers properly.*
@@ -50,7 +50,7 @@ A real-time collaborative to-do list app that allows users to manage tasks effic
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 /client        → React frontend
@@ -59,7 +59,7 @@ A real-time collaborative to-do list app that allows users to manage tasks effic
 
 ---
 
-## 🧑‍💻 Getting Started (Local Development)
+## Getting Started (Local Development)
 
 ### 1. **Clone the Repository**
 
@@ -109,7 +109,7 @@ npm run dev
 ---
 
 
-## 🧠 Learnings
+##  Learnings
 
 - Learned to handle **real-time communication** using Socket.IO
 - Understood the **limitations of Vercel** for backend Socket.IO support
